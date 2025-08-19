@@ -9,6 +9,7 @@ services:
     depends_on:
       - postgres
     environment:
+      - PYTHONPATH=/opt/airflow
       - AIRFLOW__CORE__LOAD_EXAMPLES=False  
       - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
