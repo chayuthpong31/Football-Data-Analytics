@@ -1,0 +1,33 @@
+[2025-08-19T15:22:24.015+0000] {logging_mixin.py:149} INFO - Changing /opt/***/logs/dag_id=wikipedia_flow/run_id=manual__2025-08-19T15:22:21.464026+00:00/task_id=extract_data_from_wikipedia permission to 509
+[2025-08-19T15:22:24.015+0000] {logging_mixin.py:149} INFO - Failed to change /opt/***/logs/dag_id=wikipedia_flow/run_id=manual__2025-08-19T15:22:21.464026+00:00/task_id=extract_data_from_wikipedia permission to 509: [Errno 1] Operation not permitted: '/opt/***/logs/dag_id=wikipedia_flow/run_id=manual__2025-08-19T15:22:21.464026+00:00/task_id=extract_data_from_wikipedia'
+[2025-08-19T15:22:24.055+0000] {logging_mixin.py:149} INFO - Changing /opt/***/logs/dag_id=wikipedia_flow/run_id=manual__2025-08-19T15:22:21.464026+00:00/task_id=extract_data_from_wikipedia permission to 509
+[2025-08-19T15:22:24.056+0000] {logging_mixin.py:149} INFO - Failed to change /opt/***/logs/dag_id=wikipedia_flow/run_id=manual__2025-08-19T15:22:21.464026+00:00/task_id=extract_data_from_wikipedia permission to 509: [Errno 1] Operation not permitted: '/opt/***/logs/dag_id=wikipedia_flow/run_id=manual__2025-08-19T15:22:21.464026+00:00/task_id=extract_data_from_wikipedia'
+[2025-08-19T15:22:24.096+0000] {taskinstance.py:1125} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: wikipedia_flow.extract_data_from_wikipedia manual__2025-08-19T15:22:21.464026+00:00 [queued]>
+[2025-08-19T15:22:24.107+0000] {taskinstance.py:1125} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: wikipedia_flow.extract_data_from_wikipedia manual__2025-08-19T15:22:21.464026+00:00 [queued]>
+[2025-08-19T15:22:24.108+0000] {taskinstance.py:1331} INFO - Starting attempt 1 of 1
+[2025-08-19T15:22:24.120+0000] {taskinstance.py:1350} INFO - Executing <Task(PythonOperator): extract_data_from_wikipedia> on 2025-08-19 15:22:21.464026+00:00
+[2025-08-19T15:22:24.125+0000] {standard_task_runner.py:57} INFO - Started process 126 to run task
+[2025-08-19T15:22:24.129+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'wikipedia_flow', 'extract_data_from_wikipedia', 'manual__2025-08-19T15:22:21.464026+00:00', '--job-id', '7', '--raw', '--subdir', 'DAGS_FOLDER/wikipedia_flow.py', '--cfg-path', '/tmp/tmpi3aw4ibw']
+[2025-08-19T15:22:24.131+0000] {standard_task_runner.py:85} INFO - Job 7: Subtask extract_data_from_wikipedia
+[2025-08-19T15:22:24.189+0000] {logging_mixin.py:149} INFO - Changing /opt/***/logs/dag_id=wikipedia_flow/run_id=manual__2025-08-19T15:22:21.464026+00:00/task_id=extract_data_from_wikipedia permission to 509
+[2025-08-19T15:22:24.189+0000] {logging_mixin.py:149} INFO - Failed to change /opt/***/logs/dag_id=wikipedia_flow/run_id=manual__2025-08-19T15:22:21.464026+00:00/task_id=extract_data_from_wikipedia permission to 509: [Errno 1] Operation not permitted: '/opt/***/logs/dag_id=wikipedia_flow/run_id=manual__2025-08-19T15:22:21.464026+00:00/task_id=extract_data_from_wikipedia'
+[2025-08-19T15:22:24.201+0000] {task_command.py:410} INFO - Running <TaskInstance: wikipedia_flow.extract_data_from_wikipedia manual__2025-08-19T15:22:21.464026+00:00 [running]> on host 2c92672f7c81
+[2025-08-19T15:22:24.278+0000] {taskinstance.py:1568} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Chayuthpong31' AIRFLOW_CTX_DAG_ID='wikipedia_flow' AIRFLOW_CTX_TASK_ID='extract_data_from_wikipedia' AIRFLOW_CTX_EXECUTION_DATE='2025-08-19T15:22:21.464026+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-19T15:22:21.464026+00:00'
+[2025-08-19T15:22:24.755+0000] {logging_mixin.py:149} INFO - Getting wikipedia page.... https://en.wikipedia.org/wiki/List_of_association_football_stadiums_by_capacity
+[2025-08-19T15:22:25.306+0000] {python.py:183} INFO - Done. Returned value was:      rank  ...                                          home_team
+0       1  ...  Korea DPR national football team, Korea DPR wo...
+1       2  ...                     Michigan Wolverines football\n
+2       3  ...                     Ohio State Buckeyes football\n
+3       4  ...  Australia national cricket team, Victoria cric...
+4       5  ...                                     FC Barcelona\n
+..    ...  ...                                                ...
+378   379  ...                                                 \n
+379   380  ...                     China national football team\n
+380   381  ...                                                 \n
+381   382  ...                                                 \n
+382   383  ...                                                 \n
+
+[383 rows x 8 columns]
+[2025-08-19T15:22:25.567+0000] {taskinstance.py:1368} INFO - Marking task as SUCCESS. dag_id=wikipedia_flow, task_id=extract_data_from_wikipedia, execution_date=20250819T152221, start_date=20250819T152224, end_date=20250819T152225
+[2025-08-19T15:22:25.626+0000] {local_task_job_runner.py:232} INFO - Task exited with return code 0
+[2025-08-19T15:22:25.643+0000] {taskinstance.py:2674} INFO - 0 downstream tasks scheduled from follow-on schedule check

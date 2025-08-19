@@ -25,6 +25,7 @@ services:
       - ./requirements.txt:/opt/airflow/requirements.txt
       - ./data:/opt/airflow/data
       - ./pipelines:/opt/airflow/pipelines
+      - ./logs:/opt/airflow/logs 
     ports:
       - "8081:8080"
     healthcheck:
@@ -59,6 +60,7 @@ services:
       - ./requirements.txt:/opt/airflow/requirements.txt
       - ./data:/opt/airflow/data
       - ./pipelines:/opt/airflow/pipelines
+      - ./logs:/opt/airflow/logs 
     environment:
       - LOAD_EX=n
       - EXECUTOR=Sequential
