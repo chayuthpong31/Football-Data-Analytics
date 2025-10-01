@@ -1,5 +1,9 @@
 import json
 import pandas as pd
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 NO_IMAGE = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png'
 
@@ -8,13 +12,23 @@ def get_wikipedia_page(url):
 
     print("Getting wikipedia page....", url)
 
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/100.0.0.0 Safari/537.36"
+        )
+    }
+
     try:
-        response = requests.get(url, timeout=10)
-        response.raise_for_status() # check if the request is successful
+        response = requests.get(url, headers=headers, timeout=10)
+        response.raise_for_status()  # ✅ ตรวจสอบว่าคำขอสำเร็จ
 
         return response.text
+
     except requests.RequestException as e:
-        print(f"An error occured: {e}")
+        print(f"An error occurred: {e}")
+        return None
 
 def get_wikipedia_data(html):
     from bs4 import BeautifulSoup
@@ -65,25 +79,25 @@ def extract_wikipedia_data(**kwargs):
         data.append(values)
     
     json_rows = json.dumps(data)
-    kwargs['ti'].xcom_push(key='rows', values=json_rows)
+    kwargs['ti'].xcom_push(key='rows', value=json_rows)
 
     return "OK"
 
 def get_lat_long(country, city):
-    from geopy.geocoders import Nominatim
+    from geopy.geocoders import ArcGIS
 
-    geolocator = Nominatim(user_agent="geoapiExercises")
-    location = geolocator.arcgis(f'{city}, {country}')
+    geolocator = ArcGIS()
+    location = geolocator.geocode(f"{city}, {country}")
 
-    if location.ok:
-        return location.latlng[0], location.latlng[1]
+    if location:
+        return (location.latitude, location.longitude)
     
     return None
 
 def transform_wikipedia_data(**kwargs):
     data = kwargs['ti'].xcom_pull(key='rows', task_ids='extract_data_from_wikipedia')
 
-    data = json.load(data)
+    data = json.loads(data)
 
     stadiums_df = pd.DataFrame(data)
     stadiums_df['location'] = stadiums_df.apply(lambda x : get_lat_long(x['country'], x['stadium']), axis=1)
@@ -96,18 +110,35 @@ def transform_wikipedia_data(**kwargs):
     stadiums_df.update(duplicates)
 
     # push to xcom
-    kwargs['ti'].xcom_push(key='rows', values=stadiums_df.to_json())
+    kwargs['ti'].xcom_push(key='rows', value=stadiums_df.to_json())
 
     return "OK"
 
 
+from datetime import datetime
+
 def load_wikipedia_data(**kwargs):
-    from datetime import datetime
     data = kwargs['ti'].xcom_pull(key='rows', task_ids='transform_wikipedia_data')
 
     data = json.loads(data)
-    data = pd.DataFrame(data)
+    df = pd.DataFrame(data)
     
-    file_name = ('stadium_cleaned ' + str(datetime.now().date()) + "_" + str(datetime.now().time().replace(":",",") + '.csv')) 
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H_%M_%S")
+    file_name = f"stadium_cleaned_{timestamp}.csv"
 
-    data.to_csv('data'+file_name, index=False)
+    # df.to_csv("data/" + file_name, index=False)
+    df.to_csv('abfs://footballdataeng@footballdataengchayuth.dfs.core.windows.net/data/' + file_name,
+                    storage_options = {
+                        'account_key': os.getenv('ACCESS_KEY')
+                    }, index=False)
+
+if __name__ == "__main__":
+    import fsspec
+
+    fs = fsspec.filesystem(
+        "abfs",
+        account_name="footballdataengchayuth",
+        account_key=os.getenv("ACCESS_KEY").strip()
+    )
+
+    print(fs.ls("footballdataeng"))
