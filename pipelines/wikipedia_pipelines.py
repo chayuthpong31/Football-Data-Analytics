@@ -22,7 +22,7 @@ def get_wikipedia_page(url):
 
     try:
         response = requests.get(url, headers=headers, timeout=10)
-        response.raise_for_status()  # ✅ ตรวจสอบว่าคำขอสำเร็จ
+        response.raise_for_status()  
 
         return response.text
 
