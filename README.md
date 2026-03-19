@@ -48,15 +48,15 @@ More info about dataset - https://en.wikipedia.org/wiki/List_of_association_foot
 ![data loaded into synapse analytics](images/load%20data%20to%20azure%20synapse.jpeg)
 5. In-depth Analysis
     1. Average Capacity of the stadiums by region
-    ![Q1](images/Q1.jpeg)
+    ![Q1](images/Q2.jpeg)
     2. Count the number of stadiums in each country
-    ![Q2](images/Q2.jpeg)
+    ![Q2](images/Q3.jpeg)
     3. Stadium ranking with each region
-    ![Q3](images/Q3.jpeg)
+    ![Q3](images/Q1.jpeg)
     4. Top 3 stadium ranking with capacity
-    ![Q4](images/Q4.jpeg)
+    ![Q4](images/Q5.jpeg)
     5. Stadium with capacity above the average
-    ![Q5](images/Q5.jpeg)
+    ![Q5](images/Q4.jpeg)
     6. Stadiums with closes capacity to regional median
     ![Q6](images/Q6.jpeg)
 6. Create Dashboard
